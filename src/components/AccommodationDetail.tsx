@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ArrowLeft, Star, MapPin, Circle, Check, X } from 'lucide-react';
 import { Card } from '@/components/ui/card';
@@ -35,7 +34,7 @@ const AccommodationDetail: React.FC<AccommodationDetailProps> = ({ onBack }) => 
     ],
     nearbyAttractions: [
       { name: "강릉 해변", distance: "도보 3분", petFriendly: true },
-      { name: "애견 동반 카페 '바다', distance: "도보 5분", petFriendly: true },
+      { name: "애견 동반 카페 '바다'", distance: "도보 5분", petFriendly: true },
       { name: "반려동물 용품점", distance: "차량 10분", petFriendly: true }
     ]
   };
