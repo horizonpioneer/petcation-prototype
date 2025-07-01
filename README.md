@@ -1,73 +1,172 @@
-# Welcome to your Lovable project
+# 🐶 반려동물 동반 숙박 탐색 서비스 : Petcation
 
-## Project info
+## 🎯 서비스 미션
+> **반려동물과의 여행, 예측 가능하고 즐겁게.**
 
-**URL**: https://lovable.dev/projects/f9790045-ed36-4924-b7c5-7c2a433d211c
+정확하고 표준화된 정보, 투명한 예약 과정, 신뢰할 수 있는 사용자 리뷰를 통해  
+반려인들의 여행을 데이터 기반으로 편리하게 만듭니다.
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## 👤 페르소나 (Persona)
 
-**Use Lovable**
+### 김진우 (25세, 개발자) - 데이터 기반의 스마트한 반려인
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/f9790045-ed36-4924-b7c5-7c2a433d211c) and start prompting.
+| 항목 | 내용 |
+|------|------|
+| 직업 | 코코아 백엔드 개발자 |
+| 성향 | 계획형, 정확성 중시, 기술 친화적 |
+| 반려동물 | 잭 러셀 테리어 '메리' (9세) |
+| 목표 | 여행 전 과정을 효율적으로 계획하고 예약하고 싶어 함 |
+| 주요 니즈 | 표준화된 핵심 정보, 직관적인 UI/UX, 투명한 요금 |
+| 페인 포인트 | 흩어진 정보, 불분명한 요금, 복잡한 예약 과정 |
 
-Changes made via Lovable will be committed automatically to this repo.
+---
 
-**Use your preferred IDE**
+### 최민준 (23세, 개발자) - 반려동물 동반 여행의 도전자
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+| 항목 | 내용 |
+|------|------|
+| 직업 | 우아한친구들 백엔드 개발자 |
+| 성향 | 활동적이고 새로운 경험을 선호 |
+| 반려동물 | 푸들 '엠제이' (2세) |
+| 목표 | 반려동물과 함께하는 다양한 액티비티 여행 시도 |
+| 주요 니즈 | 주변 관광/맛집 정보, 여행 팁, SNS 공유 가치 |
+| 페인 포인트 | 정보 부족, 준비물/주의사항에 대한 막연함, 액티비티 부족 |
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+---
 
-Follow these steps:
+## 📘 사용자 시나리오
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### 김진우의 '코딩 해방' 주말 여행
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+- 반려견 메리와 함께 동해에서 힐링 숙소 예약
+- 고급 필터로 소형견 가능 숙소 + 펫카페 + BBQ 필터 적용
+- 평점 정렬, 반려동물 후기 확인 후 예약
+- 결제 시 반려견 요금 포함 여부까지 명확히 확인
 
-# Step 3: Install the necessary dependencies.
-npm i
+🗣️ **사용자 스토리:**
+> "반려동물과 함께하는 여행을 데이터 기반으로 효율적으로 계획하고 싶습니다.  
+> 정확하고 투명한 정보를 제공하며, 숨겨진 비용 없이 깔끔하게 예약할 수 있는 서비스가 필요합니다."
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+---
 
-**Edit a file directly in GitHub**
+### 최민준의 반려견 첫 계곡 여행
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- 계곡/물놀이 테마 선택 → 반려견 수영장 숙소 검색
+- 숙소 근처 계곡/맛집/카페 정보 지도 기반 탐색
+- 초보자를 위한 여행 가이드와 체크리스트 확인
+- 숙소 예약 후 알림으로 준비물 리마인드 수신
 
-**Use GitHub Codespaces**
+🗣️ **사용자 스토리:**
+> "반려견과 함께 첫 여행을 준비 중입니다. 숙소뿐 아니라 주변 액티비티 정보,  
+> 준비 팁까지 함께 제공되는 서비스가 필요합니다."
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+---
 
-## What technologies are used for this project?
+## ✅ 인수 조건 (Acceptance Criteria)
 
-This project is built with:
+### 숙소 검색
+- **Given:** 사용자가 숙소 검색 페이지에 접속했을 때
+- **When:** ‘반려동물 동반 가능’ 필터 및 조건을 선택하고 검색했을 때
+- **Then:** 선택된 조건(크기, 시설, 요금 등)에 정확히 부합하는 숙소만 표시되어야 한다.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### 숙소 상세 페이지
+- **Given:** 검색 결과에서 숙소를 클릭했을 때
+- **When:** 상세 페이지로 진입했을 때
+- **Then:** 반려동물 관련 정보(요금, 규정, 전용 시설 등)가 구조화된 형태로 제공되어야 한다.
 
-## How can I deploy this project?
+### 리뷰 조회
+- **Given:** 사용자가 리뷰 탭에 접근했을 때
+- **When:** ‘반려동물 후기’ 필터나 키워드 검색 시
+- **Then:** 반려견 동반 후기와 평점이 필터링되어 제공되어야 한다.
 
-Simply open [Lovable](https://lovable.dev/projects/f9790045-ed36-4924-b7c5-7c2a433d211c) and click on Share -> Publish.
+### 결제 및 요금
+- **Given:** 사용자가 숙소 예약을 시도할 때
+- **When:** 결제 단계 진입 시
+- **Then:** 반려동물 추가 요금이 포함된 최종 금액이 명확히 표시되어야 한다.
 
-## Can I connect a custom domain to my Lovable project?
+### 테마 검색
+- **Given:** 사용자가 테마 검색에서 특정 테마 선택 시
+- **When:** '계곡', '트레킹' 등 필터 적용 시
+- **Then:** 숙소 및 주변 반려동물 동반 액티비티 정보가 함께 제공되어야 한다.
 
-Yes, you can!
+### 여행 가이드 및 체크리스트
+- **Given:** 사용자가 가이드 메뉴에 접근했을 때
+- **When:** 특정 테마(예: '계곡 여행') 선택 시
+- **Then:** 준비물, 주의사항, 추천 코스 등 유용한 정보가 제공되어야 한다.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+---
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## 🌟 핵심 가치 제안 (Core Value Proposition)
+
+- **정확하고 표준화된 정보 제공**  
+  → 반려동물 동반 여행에 필요한 모든 정보를 신뢰 가능한 형태로 제공  
+  _(김진우 중심)_
+
+- **간편하고 투명한 예약 경험**  
+  → 복잡한 절차 없이 원하는 숙소를 빠르게 예약, 요금도 명확하게 표시  
+  _(김진우 중심)_
+
+- **신뢰 가능한 후기 기반의 의사결정 지원**  
+  → 사용자 후기와 사진을 통해 실제 경험 기반 정보 제공  
+  _(공통)_
+
+- **초보자도 안심할 수 있는 여행 가이드**  
+  → 준비물 체크리스트, 주의사항, 추천 코스 등 지원  
+  _(최민준 중심)_
+
+- **반려동물과 함께하는 특별한 경험 탐색**  
+  → 숙소 주변의 액티비티/관광지까지 함께 제공  
+  _(최민준 중심)_
+
+---
+
+## 🧩 핵심 기능 (Core Features)
+
+### 1. 고급 검색 및 필터링
+- 지역/날짜/인원 + 반려동물 크기/종 필터
+- 편의시설 아이콘 필터 (애견 수영장, 샤워실 등)
+- 테마별 필터: 계곡, 숲속, 오션뷰 등
+
+### 2. 숙소 상세 페이지 구성
+- 반려동물 관련 규정 요약 블록
+- 요금 정책, 어메니티, 전용 공간 등 시각적 제공
+- 실제 사용자 후기 및 반려동물 정보 첨부
+
+### 3. 리뷰 및 평가 시스템
+- 반려동물 친화도, 청결도 등 특화 평점
+- 대형견/소형견 후기를 필터링할 수 있는 리뷰 기능
+
+### 4. 명확한 예약 및 결제 프로세스
+- 반려동물 관련 요금 포함된 최종 결제 화면
+- 반려동물 정보 사전 입력 → 자동 적용
+
+### 5. 여행 가이드 및 알림 기능
+- 초보 반려인을 위한 주제별 가이드 제공
+- 예약 완료 후 여행 준비 체크리스트 알림
+
+
+---
+
+## 🔭 향후 기능 아이디어
+
+- AI 기반 추천 숙소 및 액티비티
+- 반려인 커뮤니티: 후기 공유, 여행 동행 찾기
+- 자동 체크인, 반려동물 인증 태그 발급 기능
+
+---
+
+## 📍 사용자 여정 (User Journey Map)
+
+| 단계 | 행동 | 주요 기능 |
+|------|------|-----------|
+| 검색 | 지역/테마/조건 입력 | 고급 필터링 |
+| 탐색 | 숙소 리스트 확인 | 평점/후기/아이콘 |
+| 비교 | 상세 정보 및 후기 확인 | 반려견 정보 기반 리뷰 |
+| 예약 | 숙소 선택 및 결제 | 요금 투명성, 빠른 결제 |
+| 준비 | 체크리스트 확인 | 가이드 제공, 알림 |
+| 여행 | 숙소 도착 및 활동 | 주변 액티비티 정보 |
+| 후기 | 경험 공유 | 리뷰 작성 기능 |
+
+---
