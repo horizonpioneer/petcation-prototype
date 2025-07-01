@@ -11,7 +11,7 @@ const Header = () => {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
-                🐾 PetStay
+                🐾 Petcation
               </h1>
             </div>
           </div>
