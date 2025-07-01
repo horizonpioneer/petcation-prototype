@@ -1,5 +1,7 @@
 # 🐶 반려동물 동반 숙박 탐색 서비스 : Petcation
 
+배포 주소: https://petcation.lovable.app/
+
 ## 🎯 서비스 미션
 > **반려동물과의 여행, 예측 가능하고 즐겁게.**
 
