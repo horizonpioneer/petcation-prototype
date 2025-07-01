@@ -1,8 +1,10 @@
+
 import React from 'react';
 import { ArrowLeft, Star, MapPin, Circle, Check, X } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import ReviewSection from '@/components/ReviewSection';
 
 interface AccommodationDetailProps {
   onBack: () => void;
@@ -136,6 +138,9 @@ const AccommodationDetail: React.FC<AccommodationDetailProps> = ({ onBack }) => 
                 ))}
               </div>
             </Card>
+
+            {/* Reviews Section */}
+            <ReviewSection accommodationId="1" />
           </div>
 
           {/* Booking Sidebar */}
