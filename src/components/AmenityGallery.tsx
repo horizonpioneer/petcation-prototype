@@ -54,19 +54,19 @@ const AmenityGallery: React.FC<AmenityGalleryProps> = ({ amenityName, photos }) 
           {
             id: '1',
             amenityName: '애견 수영장',
-            url: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop',
+            url: 'https://images.unsplash.com/photo-1625905743181-e8a8c56521fe?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             description: '깨끗하고 안전한 애견 전용 수영장이에요'
           },
           {
             id: '2',
             amenityName: '애견 수영장',
-            url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=300&fit=crop',
+            url: 'https://images.unsplash.com/photo-1576075861274-77d2f71c675c?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             description: '다양한 크기의 반려동물이 이용할 수 있어요'
           },
           {
             id: '3',
             amenityName: '애견 수영장',
-            url: 'https://images.unsplash.com/photo-1500673922987-e212871fec22?w=400&h=300&fit=crop',
+            url: 'https://images.unsplash.com/photo-1637517566676-30b1f068a7fe?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             description: '맑고 깨끗한 물에서 안전하게 수영할 수 있어요'
           }
         ];
@@ -75,13 +75,13 @@ const AmenityGallery: React.FC<AmenityGalleryProps> = ({ amenityName, photos }) 
           {
             id: '1',
             amenityName: '전용 샤워실',
-            url: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop',
+            url: 'https://images.unsplash.com/photo-1583534778255-5d67d3dcf95d?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             description: '반려동물 전용 샤워 및 그루밍 시설이에요'
           },
           {
             id: '2',
             amenityName: '전용 샤워실',
-            url: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop',
+            url: 'https://images.unsplash.com/photo-1672426637959-49f39230ad7e?q=80&w=2370&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             description: '온수와 전용 샴푸가 준비된 세척 시설이에요'
           }
         ];
@@ -90,13 +90,13 @@ const AmenityGallery: React.FC<AmenityGalleryProps> = ({ amenityName, photos }) 
           {
             id: '1',
             amenityName: '식기/패드 제공',
-            url: 'https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?w=400&h=300&fit=crop',
+            url: 'https://images.unsplash.com/photo-1672323471087-3c6c76ebd4c1?q=80&w=2370&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             description: '깨끗한 식기와 물그릇이 준비되어 있어요'
           },
           {
             id: '2',
             amenityName: '식기/패드 제공',
-            url: 'https://images.unsplash.com/photo-1605568427561-40dd23c2acea?w=400&h=300&fit=crop',
+            url: 'https://images.unsplash.com/photo-1651571479517-7596d3d3921a?q=80&w=2369&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             description: '편안한 매트와 패드를 제공해드려요'
           }
         ];
@@ -111,7 +111,7 @@ const AmenityGallery: React.FC<AmenityGalleryProps> = ({ amenityName, photos }) 
           {
             id: '2',
             amenityName: '애견 동반 카페',
-            url: 'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=400&h=300&fit=crop',
+            url: 'https://images.unsplash.com/photo-1749280447562-d7e04018c42a?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             description: '편안한 분위기에서 반려동물과 휴식을 취할 수 있어요'
           }
         ];
