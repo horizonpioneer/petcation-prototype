@@ -54,20 +54,20 @@ const AmenityGallery: React.FC<AmenityGalleryProps> = ({ amenityName, photos }) 
           {
             id: '1',
             amenityName: '애견 수영장',
-            url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=300&fit=crop',
+            url: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop',
             description: '깨끗하고 안전한 애견 전용 수영장이에요'
           },
           {
             id: '2',
             amenityName: '애견 수영장',
-            url: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop',
+            url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=300&fit=crop',
             description: '다양한 크기의 반려동물이 이용할 수 있어요'
           },
           {
             id: '3',
             amenityName: '애견 수영장',
-            url: 'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=400&h=300&fit=crop',
-            description: '물놀이를 즐기는 반려동물들의 모습이에요'
+            url: 'https://images.unsplash.com/photo-1500673922987-e212871fec22?w=400&h=300&fit=crop',
+            description: '맑고 깨끗한 물에서 안전하게 수영할 수 있어요'
           }
         ];
       case '전용 샤워실':
@@ -81,8 +81,8 @@ const AmenityGallery: React.FC<AmenityGalleryProps> = ({ amenityName, photos }) 
           {
             id: '2',
             amenityName: '전용 샤워실',
-            url: 'https://images.unsplash.com/photo-1581888227599-779811939961?w=400&h=300&fit=crop',
-            description: '온수와 전용 샴푸가 준비되어 있어요'
+            url: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop',
+            description: '온수와 전용 샴푸가 준비된 세척 시설이에요'
           }
         ];
       case '식기/패드 제공':
@@ -111,8 +111,8 @@ const AmenityGallery: React.FC<AmenityGalleryProps> = ({ amenityName, photos }) 
           {
             id: '2',
             amenityName: '애견 동반 카페',
-            url: 'https://images.unsplash.com/photo-1516734834524-7ba8aa0c7b95?w=400&h=300&fit=crop',
-            description: '특별한 반려동물 전용 메뉴도 있어요'
+            url: 'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=400&h=300&fit=crop',
+            description: '편안한 분위기에서 반려동물과 휴식을 취할 수 있어요'
           }
         ];
       default:
@@ -146,6 +146,12 @@ const AmenityGallery: React.FC<AmenityGalleryProps> = ({ amenityName, photos }) 
   const prevPhoto = () => {
     if (selectedPhoto !== null) {
       setSelectedPhoto(selectedPhoto === 0 ? displayPhotos.length - 1 : selectedPhoto - 1);
+    }
+  };
+
+  const handleBackgroundClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      closeLightbox();
     }
   };
 
@@ -194,7 +200,10 @@ const AmenityGallery: React.FC<AmenityGalleryProps> = ({ amenityName, photos }) 
 
       {/* Lightbox Modal */}
       {selectedPhoto !== null && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
+          onClick={handleBackgroundClick}
+        >
           <div className="relative max-w-4xl max-h-full p-4">
             <Button
               variant="ghost"
