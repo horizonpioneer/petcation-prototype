@@ -1,13 +1,15 @@
-
 import React, { useState } from 'react';
 import Header from '@/components/Header';
 import SearchFilters from '@/components/SearchFilters';
 import AccommodationCard from '@/components/AccommodationCard';
 import AccommodationDetail from '@/components/AccommodationDetail';
 import AccommodationMap from '@/components/AccommodationMap';
+import PersonalizedRecommendation from '@/components/PersonalizedRecommendation';
+import TravelReport from '@/components/TravelReport';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Map, List } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Map, List, Sparkles, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
@@ -15,6 +17,7 @@ const Index = () => {
   const [selectedAccommodation, setSelectedAccommodation] = useState<string | null>(null);
   const [filteredAccommodations, setFilteredAccommodations] = useState<any[]>([]);
   const [showMap, setShowMap] = useState(false);
+  const [activeTab, setActiveTab] = useState('search');
   const navigate = useNavigate();
 
   // Mock data for accommodations with coordinates
@@ -31,7 +34,9 @@ const Index = () => {
       petFriendlyScore: 4.9,
       amenities: ['애견 운동장', '애견 수영장', '전용 샤워실', '식기 제공'],
       petFee: 30000,
-      theme: 'beach'
+      theme: 'beach',
+      suitableFor: ['small', 'medium', 'large'],
+      petAgeGroups: ['puppy', 'adult', 'senior']
     },
     {
       id: '2',
@@ -45,7 +50,9 @@ const Index = () => {
       petFriendlyScore: 4.7,
       amenities: ['애견 운동장', '트레킹 코스', '바비큐 시설'],
       petFee: 20000,
-      theme: 'mountain'
+      theme: 'mountain',
+      suitableFor: ['medium', 'large'],
+      petAgeGroups: ['adult', 'senior']
     },
     {
       id: '3',
@@ -59,7 +66,9 @@ const Index = () => {
       petFriendlyScore: 5.0,
       amenities: ['프라이빗 풀', '애견 놀이터', '해변 접근', '미용실'],
       petFee: 0,
-      theme: 'beach'
+      theme: 'beach',
+      suitableFor: ['small', 'medium', 'large'],
+      petAgeGroups: ['puppy', 'adult', 'senior']
     },
     {
       id: '4',
@@ -73,7 +82,9 @@ const Index = () => {
       petFriendlyScore: 4.5,
       amenities: ['계곡 접근', '캠핑 시설', '바비큐', '식기 제공'],
       petFee: 15000,
-      theme: 'valley'
+      theme: 'valley',
+      suitableFor: ['medium', 'large'],
+      petAgeGroups: ['adult']
     },
     {
       id: '5',
@@ -87,7 +98,9 @@ const Index = () => {
       petFriendlyScore: 4.6,
       amenities: ['펫 카페', '미용 서비스', '의료진 상주', '픽업 서비스'],
       petFee: 25000,
-      theme: 'city'
+      theme: 'city',
+      suitableFor: ['small', 'medium'],
+      petAgeGroups: ['puppy', 'adult', 'senior']
     },
     {
       id: '6',
@@ -101,7 +114,9 @@ const Index = () => {
       petFriendlyScore: 4.4,
       amenities: ['산책로', '애견 운동장', '난로', '자연 체험'],
       petFee: 18000,
-      theme: 'mountain'
+      theme: 'mountain',
+      suitableFor: ['medium', 'large'],
+      petAgeGroups: ['adult', 'senior']
     }
   ];
 
@@ -117,10 +132,21 @@ const Index = () => {
       );
     }
     
+    // 반려동물 프로필 기반 필터링
+    if (filters.selectedPet) {
+      const pet = filters.selectedPet;
+      const petSizeCategory = pet.weight <= 5 ? 'small' : pet.weight <= 20 ? 'medium' : 'large';
+      const petAgeCategory = pet.age <= 1 ? 'puppy' : pet.age <= 7 ? 'adult' : 'senior';
+      
+      filtered = filtered.filter(acc => 
+        acc.suitableFor.includes(petSizeCategory) && 
+        acc.petAgeGroups.includes(petAgeCategory)
+      );
+    }
+    
     // 반려동물 크기 필터링
     if (filters.petSize) {
-      // 실제로는 더 복잡한 로직이 필요하지만 데모용으로 간단히 구현
-      filtered = filtered.filter(acc => acc.petFee <= 25000);
+      filtered = filtered.filter(acc => acc.suitableFor.includes(filters.petSize));
     }
     
     // 가격대 필터링
@@ -187,109 +213,161 @@ const Index = () => {
               투명한 정보, 신뢰할 수 있는 후기, 스트레스 없는 예약
             </p>
           </div>
-          
-          <SearchFilters onSearch={handleSearch} />
         </div>
       </div>
 
-      {/* Theme Categories */}
+      {/* Main Content with Tabs */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">🎯 테마별 숙소 찾기</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          {themeCategories.map(category => (
-            <Button
-              key={category.id}
-              variant="outline"
-              className="h-20 flex flex-col items-center justify-center hover:bg-blue-50 hover:border-blue-300"
-              onClick={() => {
-                const themeFiltered = accommodations.filter(acc => acc.theme === category.id);
-                setFilteredAccommodations(themeFiltered);
-              }}
-            >
-              <span className="text-lg mb-1">{category.name}</span>
-              <Badge variant="secondary" className="text-xs">
-                {category.count}개 숙소
-              </Badge>
-            </Button>
-          ))}
-        </div>
-      </div>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="search" className="flex items-center space-x-2">
+              <List className="h-4 w-4" />
+              <span>숙소 검색</span>
+            </TabsTrigger>
+            <TabsTrigger value="recommendation" className="flex items-center space-x-2">
+              <Sparkles className="h-4 w-4" />
+              <span>맞춤 추천</span>
+            </TabsTrigger>
+            <TabsTrigger value="reports" className="flex items-center space-x-2">
+              <FileText className="h-4 w-4" />
+              <span>여행 리포트</span>
+            </TabsTrigger>
+            <TabsTrigger value="guide" className="flex items-center space-x-2">
+              <Map className="h-4 w-4" />
+              <span>여행 가이드</span>
+            </TabsTrigger>
+          </TabsList>
 
-      {/* Results Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900">반려동물 동반 가능 숙소</h2>
-            <p className="text-gray-600 mt-1">{displayAccommodations.length}개의 숙소를 찾았습니다</p>
-          </div>
-          
-          <div className="flex items-center space-x-4">
-            <div className="flex bg-gray-100 rounded-lg p-1">
-              <Button
-                variant={!showMap ? "default" : "ghost"}
-                size="sm"
-                onClick={() => setShowMap(false)}
-              >
-                <List className="h-4 w-4 mr-2" />
-                목록
-              </Button>
-              <Button
-                variant={showMap ? "default" : "ghost"}
-                size="sm"
-                onClick={() => setShowMap(true)}
-              >
-                <Map className="h-4 w-4 mr-2" />
-                지도
+          <TabsContent value="search" className="space-y-8">
+            <SearchFilters onSearch={handleSearch} />
+
+            {/* Theme Categories */}
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">🎯 테마별 숙소 찾기</h2>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                {themeCategories.map(category => (
+                  <Button
+                    key={category.id}
+                    variant="outline"
+                    className="h-20 flex flex-col items-center justify-center hover:bg-blue-50 hover:border-blue-300"
+                    onClick={() => {
+                      const themeFiltered = accommodations.filter(acc => acc.theme === category.id);
+                      setFilteredAccommodations(themeFiltered);
+                    }}
+                  >
+                    <span className="text-lg mb-1">{category.name}</span>
+                    <Badge variant="secondary" className="text-xs">
+                      {category.count}개 숙소
+                    </Badge>
+                  </Button>
+                ))}
+              </div>
+            </div>
+
+            {/* Results Section */}
+            <div>
+              <div className="flex justify-between items-center mb-8">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900">반려동물 동반 가능 숙소</h2>
+                  <p className="text-gray-600 mt-1">{displayAccommodations.length}개의 숙소를 찾았습니다</p>
+                </div>
+                
+                <div className="flex items-center space-x-4">
+                  <div className="flex bg-gray-100 rounded-lg p-1">
+                    <Button
+                      variant={!showMap ? "default" : "ghost"}
+                      size="sm"
+                      onClick={() => setShowMap(false)}
+                    >
+                      <List className="h-4 w-4 mr-2" />
+                      목록
+                    </Button>
+                    <Button
+                      variant={showMap ? "default" : "ghost"}
+                      size="sm"
+                      onClick={() => setShowMap(true)}
+                    >
+                      <Map className="h-4 w-4 mr-2" />
+                      지도
+                    </Button>
+                  </div>
+                  
+                  <select className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option>추천순</option>
+                    <option>평점 높은순</option>
+                    <option>가격 낮은순</option>
+                    <option>가격 높은순</option>
+                    <option>반려동물 친화도순</option>
+                  </select>
+                </div>
+              </div>
+
+              {showMap ? (
+                <AccommodationMap
+                  accommodations={displayAccommodations}
+                  onAccommodationClick={handleAccommodationClick}
+                />
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {displayAccommodations.map(accommodation => (
+                    <AccommodationCard
+                      key={accommodation.id}
+                      {...accommodation}
+                      onClick={handleAccommodationClick}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="recommendation">
+            <PersonalizedRecommendation />
+          </TabsContent>
+
+          <TabsContent value="reports">
+            <TravelReport />
+          </TabsContent>
+
+          <TabsContent value="guide">
+            <div className="text-center py-12">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">🗺️ 여행 가이드</h2>
+              <p className="text-gray-600 mb-6">
+                반려동물 동반 여행에 필요한 모든 정보를 확인하세요
+              </p>
+              <Button onClick={() => navigate('/travel-guide')}>
+                상세 가이드 보기
               </Button>
             </div>
-            
-            <select className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-              <option>추천순</option>
-              <option>평점 높은순</option>
-              <option>가격 낮은순</option>
-              <option>가격 높은순</option>
-              <option>반려동물 친화도순</option>
-            </select>
-          </div>
-        </div>
-
-        {showMap ? (
-          <AccommodationMap
-            accommodations={displayAccommodations}
-            onAccommodationClick={handleAccommodationClick}
-          />
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {displayAccommodations.map(accommodation => (
-              <AccommodationCard
-                key={accommodation.id}
-                {...accommodation}
-                onClick={handleAccommodationClick}
-              />
-            ))}
-          </div>
-        )}
+          </TabsContent>
+        </Tabs>
 
         {/* Call to Action Section */}
-        <div className="mt-16 bg-gradient-to-r from-blue-50 to-green-50 rounded-2xl p-8 text-center">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">
-            아직 원하는 숙소를 찾지 못하셨나요?
-          </h3>
-          <p className="text-gray-600 mb-6">
-            더 많은 필터 조건을 설정하거나, 여행 테마별로 추천 숙소를 확인해보세요
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button 
-              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-green-600 text-white rounded-lg hover:from-blue-700 hover:to-green-700 transition-all"
-              onClick={() => navigate('/travel-guide')}
-            >
-              여행 가이드 보기
-            </button>
-            <button className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all">
-              테마별 추천 보기
-            </button>
+        {activeTab === 'search' && (
+          <div className="mt-16 bg-gradient-to-r from-blue-50 to-green-50 rounded-2xl p-8 text-center">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              아직 원하는 숙소를 찾지 못하셨나요?
+            </h3>
+            <p className="text-gray-600 mb-6">
+              맞춤형 추천을 통해 완벽한 여행을 계획해보세요
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-green-600 text-white rounded-lg hover:from-blue-700 hover:to-green-700 transition-all"
+                onClick={() => setActiveTab('recommendation')}
+              >
+                맞춤 추천 받기
+              </Button>
+              <Button 
+                variant="outline"
+                className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all"
+                onClick={() => navigate('/travel-guide')}
+              >
+                여행 가이드 보기
+              </Button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

@@ -1,10 +1,10 @@
-
 import React from 'react';
 import { ArrowLeft, Star, MapPin, Circle, Check, X } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import ReviewSection from '@/components/ReviewSection';
+import AmenityGallery from '@/components/AmenityGallery';
 
 interface AccommodationDetailProps {
   onBack: () => void;
@@ -21,12 +21,12 @@ const AccommodationDetail: React.FC<AccommodationDetailProps> = ({ onBack }) => 
     petFriendlyScore: 4.9,
     images: ["🏨", "🌊", "🐕", "🏊"],
     amenities: [
-      { name: "애견 운동장", available: true, icon: "🏃" },
-      { name: "애견 수영장", available: true, icon: "🏊" },
-      { name: "전용 샤워실", available: true, icon: "🚿" },
-      { name: "식기/패드 제공", available: true, icon: "🍽️" },
-      { name: "애견 동반 카페", available: true, icon: "☕" },
-      { name: "미용 서비스", available: false, icon: "✂️" }
+      { name: "애견 운동장", available: true, icon: "🏃", suitableFor: ["소형견", "중형견", "대형견"] },
+      { name: "애견 수영장", available: true, icon: "🏊", suitableFor: ["중형견", "대형견"] },
+      { name: "전용 샤워실", available: true, icon: "🚿", suitableFor: ["모든 크기"] },
+      { name: "식기/패드 제공", available: true, icon: "🍽️", suitableFor: ["모든 크기"] },
+      { name: "애견 동반 카페", available: true, icon: "☕", suitableFor: ["모든 크기"] },
+      { name: "미용 서비스", available: false, icon: "✂️", suitableFor: ["소형견", "중형견"] }
     ],
     rules: [
       "체크인 시 반려동물 등록증 지참 필수",
@@ -38,7 +38,25 @@ const AccommodationDetail: React.FC<AccommodationDetailProps> = ({ onBack }) => 
       { name: "강릉 해변", distance: "도보 3분", petFriendly: true },
       { name: "애견 동반 카페 '바다'", distance: "도보 5분", petFriendly: true },
       { name: "반려동물 용품점", distance: "차량 10분", petFriendly: true }
-    ]
+    ],
+    // 반려동물 크기별 최적화 정보
+    sizeRecommendations: {
+      small: {
+        suitable: true,
+        notes: "소형견에게 적합한 실내 놀이 공간과 안전한 산책로가 있어요",
+        specialAmenities: ["실내 놀이방", "소형견 전용 풀"]
+      },
+      medium: {
+        suitable: true,
+        notes: "중형견이 마음껏 뛰어놀 수 있는 넓은 운동장이 준비되어 있어요",
+        specialAmenities: ["중형견 운동장", "아질리티 코스"]
+      },
+      large: {
+        suitable: true,
+        notes: "대형견도 편안하게 지낼 수 있는 충분한 공간과 시설을 제공해요",
+        specialAmenities: ["대형견 전용 구역", "대형견 수영장"]
+      }
+    }
   };
 
   // 반려동물 친화 점수에 따른 색상 설정
@@ -96,18 +114,60 @@ const AccommodationDetail: React.FC<AccommodationDetailProps> = ({ onBack }) => 
               </div>
             </Card>
 
-            {/* Pet Amenities */}
+            {/* 반려동물 크기별 추천 정보 */}
+            <Card className="p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">🐾 반려동물 크기별 최적화 정보</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {Object.entries(accommodation.sizeRecommendations).map(([size, info]) => (
+                  <div key={size} className="p-4 bg-gray-50 rounded-lg">
+                    <h3 className="font-semibold mb-2">
+                      {size === 'small' ? '🐕 소형견' : size === 'medium' ? '🦮 중형견' : '🐕‍🦺 대형견'}
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-3">{info.notes}</p>
+                    <div className="space-y-1">
+                      {info.specialAmenities.map((amenity, idx) => (
+                        <Badge key={idx} variant="outline" className="text-xs mr-1">
+                          {amenity}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Card>
+
+            {/* Pet Amenities with Photos */}
             <Card className="p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-4">🐾 반려동물 편의시설</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-6">
                 {accommodation.amenities.map((amenity, index) => (
-                  <div key={index} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                    <span className="text-2xl">{amenity.icon}</span>
-                    <span className="flex-1">{amenity.name}</span>
-                    {amenity.available ? (
-                      <Check className="h-5 w-5 text-green-600" />
-                    ) : (
-                      <X className="h-5 w-5 text-red-500" />
+                  <div key={index} className="border-b border-gray-100 pb-6 last:border-b-0">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center space-x-3">
+                        <span className="text-2xl">{amenity.icon}</span>
+                        <div>
+                          <h3 className="font-medium">{amenity.name}</h3>
+                          <div className="flex flex-wrap gap-1 mt-1">
+                            {amenity.suitableFor.map((size, idx) => (
+                              <Badge key={idx} variant="outline" className="text-xs">
+                                {size}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      {amenity.available ? (
+                        <Check className="h-5 w-5 text-green-600" />
+                      ) : (
+                        <X className="h-5 w-5 text-red-500" />
+                      )}
+                    </div>
+                    
+                    {amenity.available && (
+                      <AmenityGallery 
+                        amenityName={amenity.name}
+                        photos={[]}
+                      />
                     )}
                   </div>
                 ))}
@@ -162,7 +222,6 @@ const AccommodationDetail: React.FC<AccommodationDetailProps> = ({ onBack }) => 
                   <span className="text-gray-500">/ 박</span>
                 </div>
                 
-                {/* 개선된 가격 안내 */}
                 <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-3">
                   <div className="flex items-center space-x-2 mb-2">
                     <Badge className="bg-green-600 text-white text-xs">
