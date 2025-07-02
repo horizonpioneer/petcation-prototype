@@ -41,6 +41,14 @@ const AccommodationDetail: React.FC<AccommodationDetailProps> = ({ onBack }) => 
     ]
   };
 
+  // 반려동물 친화 점수에 따른 색상 설정
+  const getPetFriendlyColor = (score: number) => {
+    if (score >= 4.5) return 'from-green-600 to-emerald-600';
+    if (score >= 4.0) return 'from-blue-600 to-green-600';
+    if (score >= 3.5) return 'from-yellow-500 to-orange-500';
+    return 'from-red-500 to-orange-500';
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -81,7 +89,7 @@ const AccommodationDetail: React.FC<AccommodationDetailProps> = ({ onBack }) => 
                     <span className="text-xl font-bold">{accommodation.rating}</span>
                     <span className="text-gray-500">({accommodation.reviewCount}개 리뷰)</span>
                   </div>
-                  <Badge className="bg-gradient-to-r from-blue-600 to-green-600 text-white">
+                  <Badge className={`bg-gradient-to-r ${getPetFriendlyColor(accommodation.petFriendlyScore)} text-white font-medium`}>
                     🐾 반려동물 친화도 {accommodation.petFriendlyScore}/5
                   </Badge>
                 </div>
@@ -147,15 +155,36 @@ const AccommodationDetail: React.FC<AccommodationDetailProps> = ({ onBack }) => 
           <div className="lg:col-span-1">
             <Card className="p-6 sticky top-8">
               <div className="mb-6">
-                <div className="flex items-baseline space-x-2 mb-2">
+                <div className="flex items-baseline space-x-2 mb-3">
                   <span className="text-3xl font-bold text-gray-900">
-                    {accommodation.price.toLocaleString()}원
+                    {(accommodation.price + accommodation.petFee).toLocaleString()}원
                   </span>
                   <span className="text-gray-500">/ 박</span>
                 </div>
-                <div className="flex items-center text-sm text-orange-600">
-                  <Circle className="h-2 w-2 mr-1" />
-                  반려동물 추가요금: {accommodation.petFee.toLocaleString()}원
+                
+                {/* 개선된 가격 안내 */}
+                <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-3">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <Badge className="bg-green-600 text-white text-xs">
+                      ✨ 반려동물 비용 포함
+                    </Badge>
+                  </div>
+                  <div className="text-sm text-green-800">
+                    <div className="flex justify-between items-center mb-1">
+                      <span>기본 숙박비</span>
+                      <span>{accommodation.price.toLocaleString()}원</span>
+                    </div>
+                    <div className="flex justify-between items-center mb-1">
+                      <span>반려동물 동반 서비스</span>
+                      <span>{accommodation.petFee.toLocaleString()}원</span>
+                    </div>
+                    <div className="border-t border-green-300 pt-1 mt-2 font-medium">
+                      <div className="flex justify-between items-center">
+                        <span>총 금액 (모든 비용 포함)</span>
+                        <span>{(accommodation.price + accommodation.petFee).toLocaleString()}원</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -180,15 +209,16 @@ const AccommodationDetail: React.FC<AccommodationDetailProps> = ({ onBack }) => 
 
               <div className="border-t pt-4 mb-6">
                 <div className="flex justify-between items-center mb-2">
-                  <span>숙박비 (2박)</span>
-                  <span>{(accommodation.price * 2).toLocaleString()}원</span>
+                  <span>총 숙박비 (2박)</span>
+                  <span>{((accommodation.price + accommodation.petFee) * 2).toLocaleString()}원</span>
                 </div>
-                <div className="flex justify-between items-center mb-2">
-                  <span>반려동물 추가요금</span>
-                  <span>{(accommodation.petFee * 2).toLocaleString()}원</span>
+                <div className="bg-blue-50 border border-blue-200 rounded p-2 mb-2">
+                  <div className="text-xs text-blue-800 font-medium">
+                    💰 투명한 가격 정책: 모든 반려동물 관련 비용이 포함된 금액입니다
+                  </div>
                 </div>
                 <div className="flex justify-between items-center font-bold text-lg border-t pt-2">
-                  <span>총 합계</span>
+                  <span>최종 결제 금액</span>
                   <span>{((accommodation.price + accommodation.petFee) * 2).toLocaleString()}원</span>
                 </div>
               </div>

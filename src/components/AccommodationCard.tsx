@@ -32,6 +32,21 @@ const AccommodationCard: React.FC<AccommodationCardProps> = ({
   petFee,
   onClick
 }) => {
+  // 반려동물 친화 점수에 따른 색상 설정
+  const getPetFriendlyColor = (score: number) => {
+    if (score >= 4.5) return 'from-green-600 to-emerald-600';
+    if (score >= 4.0) return 'from-blue-600 to-green-600';
+    if (score >= 3.5) return 'from-yellow-500 to-orange-500';
+    return 'from-red-500 to-orange-500';
+  };
+
+  const getPetFriendlyTextColor = (score: number) => {
+    if (score >= 4.5) return 'text-green-700';
+    if (score >= 4.0) return 'text-blue-700';
+    if (score >= 3.5) return 'text-orange-700';
+    return 'text-red-700';
+  };
+
   return (
     <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer" onClick={() => onClick(id)}>
       {/* Image */}
@@ -42,7 +57,7 @@ const AccommodationCard: React.FC<AccommodationCardProps> = ({
         <button className="absolute top-3 right-3 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors">
           <Heart className="h-4 w-4 text-gray-600" />
         </button>
-        <Badge className="absolute top-3 left-3 bg-gradient-to-r from-blue-600 to-green-600 text-white">
+        <Badge className={`absolute top-3 left-3 bg-gradient-to-r ${getPetFriendlyColor(petFriendlyScore)} text-white font-medium`}>
           반려동물 친화 {petFriendlyScore}/5
         </Badge>
       </div>
@@ -82,16 +97,18 @@ const AccommodationCard: React.FC<AccommodationCardProps> = ({
           <div>
             <div className="flex items-center space-x-2">
               <span className="text-2xl font-bold text-gray-900">
-                {price.toLocaleString()}원
+                {(price + petFee).toLocaleString()}원
               </span>
               <span className="text-sm text-gray-500">/ 박</span>
             </div>
-            {petFee > 0 && (
-              <div className="flex items-center text-sm text-orange-600">
-                <Circle className="h-2 w-2 mr-1" />
-                반려동물 추가요금: {petFee.toLocaleString()}원
-              </div>
-            )}
+            <div className="flex items-center space-x-2 mt-1">
+              <Badge variant="outline" className="text-xs bg-green-50 text-green-700 border-green-200">
+                ✨ 반려동물 비용 포함
+              </Badge>
+              <span className={`text-xs font-medium ${getPetFriendlyTextColor(petFriendlyScore)}`}>
+                🐾 친화도 {petFriendlyScore}/5
+              </span>
+            </div>
           </div>
           <Button 
             size="sm" 
