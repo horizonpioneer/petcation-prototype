@@ -19,35 +19,115 @@ interface AmenityGalleryProps {
 const AmenityGallery: React.FC<AmenityGalleryProps> = ({ amenityName, photos }) => {
   const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null);
 
-  // 예시 사진 데이터 - 실제로는 props로 받아올 데이터
-  const mockPhotos: AmenityPhoto[] = [
-    {
-      id: '1',
-      amenityName: '애견 운동장',
-      url: '🏃',
-      description: '넓은 야외 운동장에서 자유롭게 뛰어놀 수 있어요'
-    },
-    {
-      id: '2',
-      amenityName: '애견 운동장',
-      url: '🌳',
-      description: '자연 친화적인 환경으로 조성되어 있어요'
-    },
-    {
-      id: '3',
-      amenityName: '애견 운동장',
-      url: '⚽',
-      description: '다양한 놀이기구와 장난감이 준비되어 있어요'
-    },
-    {
-      id: '4',
-      amenityName: '애견 운동장',
-      url: '🚿',
-      description: '운동 후 씻을 수 있는 세척 공간도 마련되어 있어요'
+  // 편의시설별 실제 사진 데이터
+  const getPhotosForAmenity = (amenityName: string): AmenityPhoto[] => {
+    switch (amenityName) {
+      case '애견 운동장':
+        return [
+          {
+            id: '1',
+            amenityName: '애견 운동장',
+            url: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=400&h=300&fit=crop',
+            description: '넓은 야외 운동장에서 자유롭게 뛰어놀 수 있어요'
+          },
+          {
+            id: '2',
+            amenityName: '애견 운동장',
+            url: 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=300&fit=crop',
+            description: '자연 친화적인 환경으로 조성되어 있어요'
+          },
+          {
+            id: '3',
+            amenityName: '애견 운동장',
+            url: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400&h=300&fit=crop',
+            description: '다양한 놀이기구와 장난감이 준비되어 있어요'
+          },
+          {
+            id: '4',
+            amenityName: '애견 운동장',
+            url: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=400&h=300&fit=crop',
+            description: '운동 후 휴식할 수 있는 그늘진 공간도 마련되어 있어요'
+          }
+        ];
+      case '애견 수영장':
+        return [
+          {
+            id: '1',
+            amenityName: '애견 수영장',
+            url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=300&fit=crop',
+            description: '깨끗하고 안전한 애견 전용 수영장이에요'
+          },
+          {
+            id: '2',
+            amenityName: '애견 수영장',
+            url: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop',
+            description: '다양한 크기의 반려동물이 이용할 수 있어요'
+          },
+          {
+            id: '3',
+            amenityName: '애견 수영장',
+            url: 'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=400&h=300&fit=crop',
+            description: '물놀이를 즐기는 반려동물들의 모습이에요'
+          }
+        ];
+      case '전용 샤워실':
+        return [
+          {
+            id: '1',
+            amenityName: '전용 샤워실',
+            url: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop',
+            description: '반려동물 전용 샤워 및 그루밍 시설이에요'
+          },
+          {
+            id: '2',
+            amenityName: '전용 샤워실',
+            url: 'https://images.unsplash.com/photo-1581888227599-779811939961?w=400&h=300&fit=crop',
+            description: '온수와 전용 샴푸가 준비되어 있어요'
+          }
+        ];
+      case '식기/패드 제공':
+        return [
+          {
+            id: '1',
+            amenityName: '식기/패드 제공',
+            url: 'https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?w=400&h=300&fit=crop',
+            description: '깨끗한 식기와 물그릇이 준비되어 있어요'
+          },
+          {
+            id: '2',
+            amenityName: '식기/패드 제공',
+            url: 'https://images.unsplash.com/photo-1605568427561-40dd23c2acea?w=400&h=300&fit=crop',
+            description: '편안한 매트와 패드를 제공해드려요'
+          }
+        ];
+      case '애견 동반 카페':
+        return [
+          {
+            id: '1',
+            amenityName: '애견 동반 카페',
+            url: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=400&h=300&fit=crop',
+            description: '반려동물과 함께 즐길 수 있는 카페 공간이에요'
+          },
+          {
+            id: '2',
+            amenityName: '애견 동반 카페',
+            url: 'https://images.unsplash.com/photo-1516734834524-7ba8aa0c7b95?w=400&h=300&fit=crop',
+            description: '특별한 반려동물 전용 메뉴도 있어요'
+          }
+        ];
+      default:
+        return [
+          {
+            id: '1',
+            amenityName: amenityName,
+            url: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=400&h=300&fit=crop',
+            description: '반려동물을 위한 편의시설이에요'
+          }
+        ];
     }
-  ];
+  };
 
-  const displayPhotos = photos.length > 0 ? photos : mockPhotos;
+  const displayPhotos = photos.length > 0 ? photos : getPhotosForAmenity(amenityName);
 
   const openLightbox = (index: number) => {
     setSelectedPhoto(index);
@@ -87,10 +167,14 @@ const AmenityGallery: React.FC<AmenityGalleryProps> = ({ amenityName, photos }) 
             {displayPhotos.slice(0, 4).map((photo, index) => (
               <div
                 key={photo.id}
-                className="aspect-square bg-gradient-to-br from-blue-100 to-green-100 rounded-lg flex items-center justify-center text-4xl cursor-pointer hover:opacity-80 transition-opacity"
+                className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity"
                 onClick={() => openLightbox(index)}
               >
-                {photo.url}
+                <img 
+                  src={photo.url} 
+                  alt={photo.description}
+                  className="w-full h-full object-cover"
+                />
               </div>
             ))}
           </div>
@@ -122,8 +206,12 @@ const AmenityGallery: React.FC<AmenityGalleryProps> = ({ amenityName, photos }) 
             </Button>
 
             <div className="bg-white rounded-lg overflow-hidden">
-              <div className="aspect-video bg-gradient-to-br from-blue-100 to-green-100 flex items-center justify-center text-8xl">
-                {displayPhotos[selectedPhoto].url}
+              <div className="aspect-video">
+                <img 
+                  src={displayPhotos[selectedPhoto].url} 
+                  alt={displayPhotos[selectedPhoto].description}
+                  className="w-full h-full object-cover"
+                />
               </div>
               
               <div className="p-6">

@@ -19,7 +19,12 @@ const AccommodationDetail: React.FC<AccommodationDetailProps> = ({ onBack }) => 
     price: 180000,
     petFee: 30000,
     petFriendlyScore: 4.9,
-    images: ["🏨", "🌊", "🐕", "🏊"],
+    images: [
+      "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=400&h=300&fit=crop", 
+      "https://images.unsplash.com/photo-1552053831-71594a27632d?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=300&fit=crop"
+    ],
     amenities: [
       { name: "애견 운동장", available: true, icon: "🏃", suitableFor: ["소형견", "중형견", "대형견"] },
       { name: "애견 수영장", available: true, icon: "🏊", suitableFor: ["중형견", "대형견"] },
@@ -39,7 +44,6 @@ const AccommodationDetail: React.FC<AccommodationDetailProps> = ({ onBack }) => 
       { name: "애견 동반 카페 '바다'", distance: "도보 5분", petFriendly: true },
       { name: "반려동물 용품점", distance: "차량 10분", petFriendly: true }
     ],
-    // 반려동물 크기별 최적화 정보
     sizeRecommendations: {
       small: {
         suitable: true,
@@ -86,9 +90,13 @@ const AccommodationDetail: React.FC<AccommodationDetailProps> = ({ onBack }) => 
             {/* Hero Section */}
             <Card className="p-6">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                {accommodation.images.map((emoji, index) => (
-                  <div key={index} className="aspect-square bg-gradient-to-br from-blue-100 to-green-100 rounded-lg flex items-center justify-center text-6xl">
-                    {emoji}
+                {accommodation.images.map((imageUrl, index) => (
+                  <div key={index} className="aspect-square rounded-lg overflow-hidden">
+                    <img 
+                      src={imageUrl} 
+                      alt={`${accommodation.name} 사진 ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 ))}
               </div>
