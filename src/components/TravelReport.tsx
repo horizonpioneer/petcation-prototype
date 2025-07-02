@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { MapPin, Calendar, Camera, Heart, Star, Download } from 'lucide-react';
+import { MapPin, Calendar, Camera, Heart, Star, Download, Plus } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
