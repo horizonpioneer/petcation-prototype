@@ -103,11 +103,14 @@ const AccommodationCard: React.FC<AccommodationCardProps> = ({
             </div>
             <div className="flex items-center space-x-2 mt-1">
               <Badge variant="outline" className="text-xs bg-green-50 text-green-700 border-green-200">
-                ✨ 반려동물 비용 포함
+                ✨ 추가요금 없음
               </Badge>
               <span className={`text-xs font-medium ${getPetFriendlyTextColor(petFriendlyScore)}`}>
                 🐾 친화도 {petFriendlyScore}/5
               </span>
+            </div>
+            <div className="text-xs text-gray-500 mt-1">
+              반려동물 요금 포함 총액
             </div>
           </div>
           <Button 

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { MapPin, Star, CheckCircle, XCircle } from 'lucide-react';
 import { Card } from '@/components/ui/card';
@@ -108,12 +107,22 @@ const AccommodationDetail: React.FC<AccommodationDetailProps> = ({ onBack }) => 
               <div className="bg-gray-50 rounded-lg p-4">
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">가격 정보</h3>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-gray-600">1박 요금</span>
-                  <span className="text-xl font-bold text-blue-600">{accommodation.price.toLocaleString()}원</span>
+                  <span className="text-gray-600">숙박 요금</span>
+                  <span className="text-lg font-semibold text-gray-700">{accommodation.price.toLocaleString()}원</span>
                 </div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-gray-600">반려동물 추가 요금</span>
-                  <span className="text-blue-600">{accommodation.petFee === 0 ? '무료' : `${accommodation.petFee.toLocaleString()}원`}</span>
+                  <span className="text-gray-600">반려동물 요금</span>
+                  <span className="text-gray-700">{accommodation.petFee === 0 ? '무료' : `${accommodation.petFee.toLocaleString()}원`}</span>
+                </div>
+                <hr className="my-3" />
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-lg font-semibold text-gray-900">총 요금 (1박)</span>
+                  <span className="text-2xl font-bold text-blue-600">{(accommodation.price + accommodation.petFee).toLocaleString()}원</span>
+                </div>
+                <div className="flex items-center justify-center mb-3">
+                  <Badge className="bg-green-50 text-green-700 border-green-200 px-3 py-1">
+                    ✨ 추가요금 없음 - 모든 비용 포함
+                  </Badge>
                 </div>
                 <Button className="w-full">예약하기</Button>
               </div>
