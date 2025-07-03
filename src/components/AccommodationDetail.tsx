@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { MapPin, Star, CheckCircle, XCircle } from 'lucide-react';
 import { Card } from '@/components/ui/card';
@@ -6,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import PetFriendlyScore from '@/components/PetFriendlyScore';
 import AccommodationCourse from '@/components/AccommodationCourse';
 import NearbyVetHospitals from '@/components/NearbyVetHospitals';
+import AmenityGallery from '@/components/AmenityGallery';
 import {
   Tabs,
   TabsContent,
@@ -169,11 +171,13 @@ const AccommodationDetail: React.FC<AccommodationDetailProps> = ({ onBack }) => 
           <TabsContent value="amenities" className="space-y-6">
             <div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">🐾 편의시설</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-6">
                 {accommodation.amenities.map((amenity, index) => (
-                  <Card key={index} className="p-4 flex items-center">
-                    <CheckCircle className="h-5 w-5 mr-3 text-green-500" />
-                    <span className="text-gray-700">{amenity}</span>
+                  <Card key={index} className="p-6">
+                    <AmenityGallery 
+                      amenityName={amenity}
+                      photos={[]}
+                    />
                   </Card>
                 ))}
               </div>
