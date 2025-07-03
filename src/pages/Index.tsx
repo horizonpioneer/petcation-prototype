@@ -6,10 +6,11 @@ import AccommodationDetail from '@/components/AccommodationDetail';
 import AccommodationMap from '@/components/AccommodationMap';
 import PersonalizedRecommendation from '@/components/PersonalizedRecommendation';
 import TravelReport from '@/components/TravelReport';
+import TravelPlan from '@/components/TravelPlan';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Map, List, Sparkles, FileText } from 'lucide-react';
+import { Map, List, Sparkles, FileText, Calendar } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
@@ -219,7 +220,7 @@ const Index = () => {
       {/* Main Content with Tabs */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="search" className="flex items-center space-x-2">
               <List className="h-4 w-4" />
               <span>숙소 검색</span>
@@ -227,6 +228,10 @@ const Index = () => {
             <TabsTrigger value="recommendation" className="flex items-center space-x-2">
               <Sparkles className="h-4 w-4" />
               <span>맞춤 추천</span>
+            </TabsTrigger>
+            <TabsTrigger value="plan" className="flex items-center space-x-2">
+              <Calendar className="h-4 w-4" />
+              <span>여행 계획</span>
             </TabsTrigger>
             <TabsTrigger value="reports" className="flex items-center space-x-2">
               <FileText className="h-4 w-4" />
@@ -323,6 +328,10 @@ const Index = () => {
 
           <TabsContent value="recommendation">
             <PersonalizedRecommendation />
+          </TabsContent>
+
+          <TabsContent value="plan">
+            <TravelPlan />
           </TabsContent>
 
           <TabsContent value="reports">
