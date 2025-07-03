@@ -84,11 +84,17 @@ const AccommodationDetail: React.FC<AccommodationDetailProps> = ({ onBack }) => 
         <Card className="mb-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
             <div>
-              <img
-                src="https://source.unsplash.com/random/400x300?hotel"
-                alt={accommodation.name}
-                className="rounded-lg mb-4"
-              />
+              <div className="relative h-64 bg-gradient-to-br from-blue-100 to-green-100 rounded-lg mb-4 overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center text-6xl">
+                  🏨
+                </div>
+                <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
+                  <div className="text-white text-center">
+                    <h3 className="text-xl font-semibold mb-2">오션뷰 펫 리조트</h3>
+                    <p className="text-sm">강릉 해변의 아름다운 전망</p>
+                  </div>
+                </div>
+              </div>
               <h2 className="text-2xl font-bold text-gray-900 mb-2">{accommodation.name}</h2>
               <div className="flex items-center space-x-2 mb-3">
                 <MapPin className="h-4 w-4 text-gray-500" />
