@@ -1,298 +1,241 @@
-import React, { useState } from 'react';
-import { ArrowLeft, Star, MapPin, Wifi, Car, Coffee, Bath, Dumbbell } from 'lucide-react';
+import React from 'react';
+import { MapPin, Star, CheckCircle, XCircle } from 'lucide-react';
+import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Card } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import AmenityGallery from './AmenityGallery';
-import ReviewSection from './ReviewSection';
-import AccommodationCourse from './AccommodationCourse';
-import PetFriendlyScore from './PetFriendlyScore';
+import PetFriendlyScore from '@/components/PetFriendlyScore';
+import AccommodationCourse from '@/components/AccommodationCourse';
+import NearbyVetHospitals from '@/components/NearbyVetHospitals';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs"
 
 interface AccommodationDetailProps {
   onBack: () => void;
 }
 
 const AccommodationDetail: React.FC<AccommodationDetailProps> = ({ onBack }) => {
-  const [selectedImage, setSelectedImage] = useState(0);
-
-  // Mock data for the accommodation
+  // Mock data for accommodation details
   const accommodation = {
     id: '1',
     name: '오션뷰 펫 리조트',
-    location: '강원도 강릉시 해안가 123',
+    location: '강원도 강릉시 해안가',
     price: 180000,
-    originalPrice: 220000,
     rating: 4.8,
     reviewCount: 127,
+    image: '🏨',
     petFriendlyScore: 4.9,
-    images: [
-      'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop'
-    ],
-    amenities: ['애견 운동장', '애견 수영장', '전용 샤워실', '식기/패드 제공', '애견 동반 카페'],
-    generalAmenities: ['무료 Wi-Fi', '주차장', '카페', '체육시설', '세탁실'],
-    petPolicy: {
-      fee: 30000,
-      maxPets: 2,
-      allowedSizes: ['소형견', '중형견', '대형견'],
-      restrictions: ['예방접종 증명서 필요', '목줄 착용 필수']
-    },
-    description: '바다가 보이는 최고의 위치에 자리한 반려동물 전용 리조트입니다. 넓은 애견 운동장과 수영장을 갖추고 있어 반려동물이 자유롭게 뛰어놀 수 있습니다.',
+    amenities: ['애견 운동장', '애견 수영장', '전용 샤워실', '식기 제공'],
+    petFee: 30000,
+    theme: 'beach',
+    suitableFor: ['small', 'medium', 'large'],
+    petAgeGroups: ['puppy', 'adult', 'senior'],
+    description: '강릉 해변 바로 앞에 위치한 펫 리조트로, 모든 객실에서 아름다운 오션뷰를 감상할 수 있습니다. 반려동물을 위한 다양한 편의시설과 프로그램을 제공하며, 편안하고 즐거운 시간을 보내실 수 있습니다.',
     checkIn: '15:00',
-    checkOut: '11:00'
+    checkOut: '11:00',
+    address: '강원도 강릉시 해안로 123',
+    contact: '033-1234-5678',
+    cancellationPolicy: '체크인 7일 전까지 전액 환불 가능',
+    reviews: [
+      {
+        id: '101',
+        author: '김메리',
+        rating: 5.0,
+        comment: '최고의 펫 리조트! 메리도 너무 좋아했어요. 다음에 또 올게요!',
+        date: '2024-06-05'
+      },
+      {
+        id: '102',
+        author: '박철수',
+        rating: 4.5,
+        comment: '시설도 좋고, 강아지 용품도 잘 갖춰져 있어서 편하게 지냈습니다.',
+        date: '2024-05-28'
+      },
+      {
+        id: '103',
+        author: '이영희',
+        rating: 4.0,
+        comment: '위치는 좋았지만, 가격이 조금 비싼 감이 있어요.',
+        date: '2024-05-15'
+      }
+    ]
   };
-
-  // Mock data for the accommodation
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white shadow-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <Button variant="ghost" onClick={onBack}>
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              목록으로 돌아가기
-            </Button>
-            <div className="flex items-center space-x-2">
-              <Button variant="outline">공유하기</Button>
-              <Button variant="outline">찜하기</Button>
-            </div>
-          </div>
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+          <Button variant="ghost" onClick={onBack}>
+            ← 돌아가기
+          </Button>
+          <h1 className="text-lg font-semibold">숙소 상세 정보</h1>
+          <div></div>
         </div>
       </div>
 
+      {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Image Gallery */}
-            <div className="grid grid-cols-4 gap-2 h-96">
-              <div className="col-span-2 row-span-2">
-                <img
-                  src={accommodation.images[selectedImage]}
-                  alt="메인 이미지"
-                  className="w-full h-full object-cover rounded-lg"
-                />
-              </div>
-              {accommodation.images.slice(1, 4).map((image, index) => (
-                <div
-                  key={index + 1}
-                  className="cursor-pointer"
-                  onClick={() => setSelectedImage(index + 1)}
-                >
-                  <img
-                    src={image}
-                    alt={`이미지 ${index + 2}`}
-                    className="w-full h-full object-cover rounded-lg hover:opacity-80 transition-opacity"
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Basic Info */}
+        {/* Accommodation Info */}
+        <Card className="mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
             <div>
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                    {accommodation.name}
-                  </h1>
-                  <div className="flex items-center text-gray-600 mb-2">
-                    <MapPin className="h-4 w-4 mr-1" />
-                    <span>{accommodation.location}</span>
-                  </div>
-                  <div className="flex items-center space-x-4">
-                    <div className="flex items-center">
-                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
-                      <span className="font-medium">{accommodation.rating}</span>
-                      <span className="text-gray-600 ml-1">({accommodation.reviewCount})</span>
-                    </div>
-                    <PetFriendlyScore score={accommodation.petFriendlyScore} />
-                  </div>
+              <img
+                src="https://source.unsplash.com/random/400x300?hotel"
+                alt={accommodation.name}
+                className="rounded-lg mb-4"
+              />
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">{accommodation.name}</h2>
+              <div className="flex items-center space-x-2 mb-3">
+                <MapPin className="h-4 w-4 text-gray-500" />
+                <span className="text-gray-600">{accommodation.location}</span>
+              </div>
+              <div className="flex items-center space-x-3 mb-4">
+                <PetFriendlyScore score={accommodation.petFriendlyScore} size="lg" />
+                <div className="text-sm text-gray-500">
+                  ({accommodation.reviewCount}개의 리뷰)
                 </div>
               </div>
-              
-              <p className="text-gray-600 leading-relaxed">{accommodation.description}</p>
+              <p className="text-gray-700 leading-relaxed">{accommodation.description}</p>
             </div>
 
-            {/* Tabs */}
-            <Tabs defaultValue="amenities" className="space-y-6">
-              <TabsList className="grid w-full grid-cols-4">
-                <TabsTrigger value="amenities">편의시설</TabsTrigger>
-                <TabsTrigger value="course">주변 코스</TabsTrigger>
-                <TabsTrigger value="policy">이용 규정</TabsTrigger>
-                <TabsTrigger value="reviews">후기</TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="amenities" className="space-y-6">
-                {/* Pet Amenities */}
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">🐾 반려동물 전용 시설</h3>
-                  <div className="space-y-6">
-                    {accommodation.amenities.map(amenity => (
-                      <AmenityGallery
-                        key={amenity}
-                        amenityName={amenity}
-                        photos={[]}
-                      />
-                    ))}
-                  </div>
+            <div>
+              <div className="bg-gray-50 rounded-lg p-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">가격 정보</h3>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-gray-600">1박 요금</span>
+                  <span className="text-xl font-bold text-blue-600">{accommodation.price.toLocaleString()}원</span>
                 </div>
-
-                {/* General Amenities */}
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">🏨 일반 편의시설</h3>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    {accommodation.generalAmenities.map(amenity => (
-                      <div key={amenity} className="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg">
-                        {getAmenityIcon(amenity)}
-                        <span className="text-sm font-medium">{amenity}</span>
-                      </div>
-                    ))}
-                  </div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-gray-600">반려동물 추가 요금</span>
+                  <span className="text-blue-600">{accommodation.petFee === 0 ? '무료' : `${accommodation.petFee.toLocaleString()}원`}</span>
                 </div>
-              </TabsContent>
+                <Button className="w-full">예약하기</Button>
+              </div>
 
-              <TabsContent value="course">
-                <AccommodationCourse
-                  accommodationName={accommodation.name}
-                  accommodationLocation={accommodation.location}
-                />
-              </TabsContent>
+              <div className="mt-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">시설 정보</h3>
+                <div className="grid grid-cols-2 gap-2">
+                  {accommodation.amenities.map((amenity, index) => (
+                    <div key={index} className="flex items-center text-gray-600">
+                      <CheckCircle className="h-4 w-4 mr-2 text-green-500" />
+                      {amenity}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </Card>
 
-              <TabsContent value="policy" className="space-y-6">
-                {/* Pet Policy */}
-                <Card className="p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">🐾 반려동물 이용 규정</h3>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <span className="text-sm font-medium text-gray-700">반려동물 요금</span>
-                        <div className="text-lg font-semibold text-blue-600">
-                          {accommodation.petPolicy.fee.toLocaleString()}원 / 1박
+        <Tabs defaultValue="overview" className="space-y-8">
+          <TabsList className="grid w-full grid-cols-6">
+            <TabsTrigger value="overview">개요</TabsTrigger>
+            <TabsTrigger value="amenities">시설</TabsTrigger>
+            <TabsTrigger value="course">주변 코스</TabsTrigger>
+            <TabsTrigger value="hospitals">근처 병원</TabsTrigger>
+            <TabsTrigger value="reviews">후기</TabsTrigger>
+            <TabsTrigger value="location">위치</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="overview" className="space-y-6">
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">🏡 숙소 정보</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Card className="p-4">
+                  <h4 className="font-medium text-gray-900 mb-2">체크인/체크아웃</h4>
+                  <p className="text-gray-600">체크인: {accommodation.checkIn}</p>
+                  <p className="text-gray-600">체크아웃: {accommodation.checkOut}</p>
+                </Card>
+                <Card className="p-4">
+                  <h4 className="font-medium text-gray-900 mb-2">주소</h4>
+                  <p className="text-gray-600">{accommodation.address}</p>
+                </Card>
+                <Card className="p-4">
+                  <h4 className="font-medium text-gray-900 mb-2">연락처</h4>
+                  <p className="text-gray-600">{accommodation.contact}</p>
+                </Card>
+                <Card className="p-4">
+                  <h4 className="font-medium text-gray-900 mb-2">취소 정책</h4>
+                  <p className="text-gray-600">{accommodation.cancellationPolicy}</p>
+                </Card>
+              </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="amenities" className="space-y-6">
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">🐾 편의시설</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {accommodation.amenities.map((amenity, index) => (
+                  <Card key={index} className="p-4 flex items-center">
+                    <CheckCircle className="h-5 w-5 mr-3 text-green-500" />
+                    <span className="text-gray-700">{amenity}</span>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="course">
+            <AccommodationCourse 
+              accommodationName={accommodation.name}
+              accommodationLocation={accommodation.location}
+            />
+          </TabsContent>
+
+          <TabsContent value="hospitals">
+            <NearbyVetHospitals 
+              accommodationLocation={accommodation.location}
+              accommodationName={accommodation.name}
+            />
+          </TabsContent>
+
+          <TabsContent value="reviews" className="space-y-6">
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">💬 리뷰</h3>
+              {accommodation.reviews.length === 0 ? (
+                <Card className="p-4 text-center">
+                  <p className="text-gray-600">아직 리뷰가 없습니다.</p>
+                </Card>
+              ) : (
+                <div className="space-y-4">
+                  {accommodation.reviews.map(review => (
+                    <Card key={review.id} className="p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="font-medium text-gray-900">{review.author}</div>
+                        <div className="flex items-center">
+                          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
+                          <span className="text-sm">{review.rating}</span>
                         </div>
                       </div>
-                      <div>
-                        <span className="text-sm font-medium text-gray-700">최대 반려동물 수</span>
-                        <div className="text-lg font-semibold">{accommodation.petPolicy.maxPets}마리</div>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <span className="text-sm font-medium text-gray-700 block mb-2">허용 크기</span>
-                      <div className="flex flex-wrap gap-2">
-                        {accommodation.petPolicy.allowedSizes.map(size => (
-                          <Badge key={size} variant="outline">{size}</Badge>
-                        ))}
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <span className="text-sm font-medium text-gray-700 block mb-2">주의사항</span>
-                      <ul className="space-y-1">
-                        {accommodation.petPolicy.restrictions.map((restriction, index) => (
-                          <li key={index} className="text-sm text-gray-600 flex items-start">
-                            <span className="mr-2">•</span>
-                            {restriction}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </Card>
-
-                {/* Check-in/out */}
-                <Card className="p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">🕐 체크인/아웃</h3>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <span className="text-sm font-medium text-gray-700">체크인</span>
-                      <div className="text-lg font-semibold">{accommodation.checkIn}</div>
-                    </div>
-                    <div>
-                      <span className="text-sm font-medium text-gray-700">체크아웃</span>
-                      <div className="text-lg font-semibold">{accommodation.checkOut}</div>
-                    </div>
-                  </div>
-                </Card>
-              </TabsContent>
-
-              <TabsContent value="reviews">
-                <ReviewSection accommodationId={accommodation.id} />
-              </TabsContent>
-            </Tabs>
-          </div>
-
-          {/* Booking Card */}
-          <div className="lg:col-span-1">
-            <Card className="p-6 sticky top-24">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-2xl font-bold text-gray-900">
-                        {accommodation.price.toLocaleString()}원
-                      </span>
-                      {accommodation.originalPrice && (
-                        <span className="text-lg text-gray-500 line-through">
-                          {accommodation.originalPrice.toLocaleString()}원
-                        </span>
-                      )}
-                    </div>
-                    <span className="text-sm text-gray-600">/ 1박</span>
-                  </div>
+                      <p className="text-gray-700">{review.comment}</p>
+                      <div className="text-sm text-gray-500 mt-2">{review.date}</div>
+                    </Card>
+                  ))}
                 </div>
+              )}
+            </div>
+          </TabsContent>
 
-                <div className="p-4 bg-blue-50 rounded-lg">
-                  <div className="flex justify-between items-center text-sm">
-                    <span>숙박 요금</span>
-                    <span>{accommodation.price.toLocaleString()}원</span>
-                  </div>
-                  <div className="flex justify-between items-center text-sm mt-2">
-                    <span>반려동물 요금</span>
-                    <span>{accommodation.petPolicy.fee.toLocaleString()}원</span>
-                  </div>
-                  <hr className="my-3" />
-                  <div className="flex justify-between items-center font-semibold">
-                    <span>총 요금</span>
-                    <span>{(accommodation.price + accommodation.petPolicy.fee).toLocaleString()}원</span>
-                  </div>
-                </div>
-
-                <Button className="w-full" size="lg">
-                  예약하기
-                </Button>
-                
-                <p className="text-xs text-gray-500 text-center">
-                  예약 확정 전까지는 요금이 청구되지 않습니다
+          <TabsContent value="location">
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">📍 위치 정보</h3>
+              <Card className="p-4">
+                <p className="text-gray-700">
+                  {accommodation.name}은(는) {accommodation.location}에 위치하고 있습니다.
                 </p>
-              </div>
-            </Card>
-          </div>
-        </div>
+                {/* Add map component here */}
+              </Card>
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
-};
-
-const getAmenityIcon = (amenity: string) => {
-  switch (amenity) {
-    case '무료 Wi-Fi':
-      return <Wifi className="h-4 w-4 text-blue-600" />;
-    case '주차장':
-      return <Car className="h-4 w-4 text-green-600" />;
-    case '카페':
-      return <Coffee className="h-4 w-4 text-orange-600" />;
-    case '체육시설':
-      return <Dumbbell className="h-4 w-4 text-red-600" />;
-    case '세탁실':
-      return <Bath className="h-4 w-4 text-purple-600" />;
-    default:
-      return <span className="text-gray-400">•</span>;
-  }
 };
 
 export default AccommodationDetail;

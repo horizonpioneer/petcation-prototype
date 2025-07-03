@@ -10,8 +10,10 @@ import TravelPlan from '@/components/TravelPlan';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Map, List, Sparkles, FileText, Calendar } from 'lucide-react';
+import { Map, List, Sparkles, FileText, Calendar, MapPin } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import RegionalPetPlaces from '@/components/RegionalPetPlaces';
+import TravelReportSummary from '@/components/TravelReportSummary';
 
 const Index = () => {
   const [currentView, setCurrentView] = useState<'list' | 'detail'>('list');
@@ -220,10 +222,14 @@ const Index = () => {
       {/* Main Content with Tabs */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="search" className="flex items-center space-x-2">
               <List className="h-4 w-4" />
               <span>숙소 검색</span>
+            </TabsTrigger>
+            <TabsTrigger value="places" className="flex items-center space-x-2">
+              <MapPin className="h-4 w-4" />
+              <span>지역별 장소</span>
             </TabsTrigger>
             <TabsTrigger value="recommendation" className="flex items-center space-x-2">
               <Sparkles className="h-4 w-4" />
@@ -326,6 +332,10 @@ const Index = () => {
             </div>
           </TabsContent>
 
+          <TabsContent value="places">
+            <RegionalPetPlaces />
+          </TabsContent>
+
           <TabsContent value="recommendation">
             <PersonalizedRecommendation />
           </TabsContent>
@@ -334,7 +344,8 @@ const Index = () => {
             <TravelPlan />
           </TabsContent>
 
-          <TabsContent value="reports">
+          <TabsContent value="reports" className="space-y-8">
+            <TravelReportSummary />
             <TravelReport />
           </TabsContent>
 
